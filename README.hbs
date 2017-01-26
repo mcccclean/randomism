@@ -1,0 +1,53 @@
+# randomism
+
+A random number generator.
+
+It aims to provide a clean, memorable API for doing basically everything you'd
+want to do with random number generation for games, bots and procedural
+generation.
+
+Numeric and string seeds are supported, it'll generate numbers along custom 
+distribution curves (so you can weight generation toward low or high numbers,
+for example), it'll shuffle arrays, and has a bunch of handy methods for
+choosing things from a collection.
+
+The focus is on ease-of-use and predictability rather than speed or
+cryptographic security, so if those are priorities for you, this probably
+isn't the package you're looking for. 
+
+Really basic usage:
+
+```javascript
+var RNG = require('randomism');
+
+var generator = new RNG('my favourite seed');
+
+var x = generator.random() * map_width;
+var y = generator.random() * map_height;
+
+var numApples = generator.randomInt(0, 5);
+
+var job = generator.choose(['Mayor', 'Baker', 'Alchemist']);
+var deck = generator.shuffle(['A', 'K', 'Q', 'J', '10', '9', ...]);
+```
+
+Nifty usage:
+
+```javascript
+var RNG = require('randomism');
+
+var generator = new RNG('another seed');
+var straws = ['long', 'long', 'long', 'long', 'short'];
+var myChoice = generator.pluck(straws);  // will remove one from the array
+
+// clone this generator and weight it so now it'll be
+// much more likely to generate lower numbers
+var lowNumbersProbably = generator.clone().weightFront();
+var number = lowNumbersProbably.randomInt(0, 6); 
+
+// why not join the two approaches:
+var lootRemaining = ['trash', 'common', 'uncommon', 'rare', 'epic'];
+var drop = lowNumbersProbably.pluck(lootRemaining);
+```
+
+{{>main}}

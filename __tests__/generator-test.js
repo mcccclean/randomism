@@ -31,4 +31,14 @@ describe('Basic generating', () => {
         expect(result.mean).toBeCloseTo(3.5, 1);
     });
 
+    it('Should weight toward the front correctly', () => {
+        var rng = new RNG().weightFront();
+        expect(check(_ => rng.random()).mean).toBeCloseTo(0.33, 1);
+    });
+
+    it('Should weight toward the back correctly', () => {
+        var rng = new RNG().weightBack();
+        expect(check(_ => rng.random()).mean).toBeCloseTo(0.66, 1);
+    });
+
 });
