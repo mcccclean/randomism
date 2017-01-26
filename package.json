@@ -10,7 +10,6 @@
     "doc": "./node_modules/.bin/jsdoc2md --template README.hbs --files src/**/*.js > README.md"
   },
   "dependencies": {
-    "jshint": "^2.9.4",
     "mersenne-twister": "^1.1.0",
     "string-hash": "^1.1.1"
   },
