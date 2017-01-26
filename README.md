@@ -56,7 +56,7 @@ var drop = lowNumbersProbably.pluck(lootRemaining);
 A random number generator. By default, it uses an implementation of the
 Mersenne twister algorithm (from the `mersenne-twister` npm package).
 
-If a number is provided, it'll be used to seed the generator.
+If a number is passed to the constructor, it'll be used to seed the generator.
 If a string is provided, it'll be hashed (using the `string-hash` package) and then used as a seed.
 If nothing is provided, a random seed will be used.
 
@@ -73,11 +73,11 @@ of that object as a random number source instead of using its own.
     * [.weightBack()](#Generator+weightBack) ⇒ <code>[Generator](#Generator)</code>
     * [.random()](#Generator+random) ⇒ <code>number</code>
     * [.randomInt(min, max)](#Generator+randomInt) ⇒ <code>int</code>
-    * [.choose(array)](#Generator+choose) ⇒
-    * [.pluck(array, [limit])](#Generator+pluck) ⇒
-    * [.pluckCycle(array, [limit])](#Generator+pluckCycle) ⇒
-    * [.shuffle(array)](#Generator+shuffle) ⇒
-    * [.shuffleInPlace(array)](#Generator+shuffleInPlace) ⇒
+    * [.choose(array)](#Generator+choose) ⇒ <code>\*</code>
+    * [.pluck(array, [limit])](#Generator+pluck) ⇒ <code>\*</code>
+    * [.pluckCycle(array, [limit])](#Generator+pluckCycle) ⇒ <code>\*</code>
+    * [.shuffle(array)](#Generator+shuffle) ⇒ <code>array</code>
+    * [.shuffleInPlace(array)](#Generator+shuffleInPlace) ⇒ <code>array</code>
 
 <a name="new_Generator_new"></a>
 
@@ -160,11 +160,11 @@ be used instead and will return [0, min).
 
 <a name="Generator+choose"></a>
 
-### generator.choose(array) ⇒
+### generator.choose(array) ⇒ <code>\*</code>
 Return a random element of the given array.
 
 **Kind**: instance method of <code>[Generator](#Generator)</code>  
-**Returns**: a random element  
+**Returns**: <code>\*</code> - a random element  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -172,12 +172,12 @@ Return a random element of the given array.
 
 <a name="Generator+pluck"></a>
 
-### generator.pluck(array, [limit]) ⇒
+### generator.pluck(array, [limit]) ⇒ <code>\*</code>
 Return a random element of the given array, removing it from 
 the array.
 
 **Kind**: instance method of <code>[Generator](#Generator)</code>  
-**Returns**: a random element  
+**Returns**: <code>\*</code> - a random element  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -186,7 +186,7 @@ the array.
 
 <a name="Generator+pluckCycle"></a>
 
-### generator.pluckCycle(array, [limit]) ⇒
+### generator.pluckCycle(array, [limit]) ⇒ <code>\*</code>
 Return a random element of the given array, placing it at
 the end of the array. Note that limit defaults to 1 in this function,
 NOT zero, unlike pluck! The reason for this is that this function is 
@@ -197,7 +197,7 @@ item will be guaranteed to be separated by at least `limit` other items.
 This is especially neat if the generator has been created via
 
 **Kind**: instance method of <code>[Generator](#Generator)</code>  
-**Returns**: a random element  
+**Returns**: <code>\*</code> - a random element  
 **Link**: <code>Generator~curve</code> that weights generation to lower numbers. Repeated 
 calls to this function with the same array will result in a very poor shuffle,
 with items roughly in their original order but with some perturbation.
@@ -213,11 +213,11 @@ if there's a recognisable repeating sequence.
 
 <a name="Generator+shuffle"></a>
 
-### generator.shuffle(array) ⇒
+### generator.shuffle(array) ⇒ <code>array</code>
 Create a copy of the given array and shuffle it.
 
 **Kind**: instance method of <code>[Generator](#Generator)</code>  
-**Returns**: a shuffled copy of the array  
+**Returns**: <code>array</code> - a shuffled copy of the array  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -225,11 +225,11 @@ Create a copy of the given array and shuffle it.
 
 <a name="Generator+shuffleInPlace"></a>
 
-### generator.shuffleInPlace(array) ⇒
+### generator.shuffleInPlace(array) ⇒ <code>array</code>
 Randomly rearrange the elements of a given array.
 
 **Kind**: instance method of <code>[Generator](#Generator)</code>  
-**Returns**: the given array  
+**Returns**: <code>array</code> - the given array  
 
 | Param | Type | Description |
 | --- | --- | --- |

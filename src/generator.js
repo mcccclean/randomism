@@ -19,7 +19,7 @@ function makeSource(source) {
  * A random number generator. By default, it uses an implementation of the
  * Mersenne twister algorithm (from the `mersenne-twister` npm package).
  *
- * If a number is provided, it'll be used to seed the generator.
+ * If a number is passed to the constructor, it'll be used to seed the generator.
  * If a string is provided, it'll be hashed (using the `string-hash` package) and then used as a seed.
  * If nothing is provided, a random seed will be used.
  *
@@ -123,7 +123,7 @@ Generator.prototype.randomInt = function(min, max) {
 /**
  * Return a random element of the given array.
  * @param {array} array - the source array.
- * @returns a random element
+ * @returns {*} a random element
  */
 Generator.prototype.choose = function(array) {
     return array[this.randomInt(array.length)];
@@ -136,7 +136,7 @@ Generator.prototype.choose = function(array) {
  * @param {int} [limit=0] - the number of elements from the end of the array 
  *                  to ignore. This is mainly to be used internally by
  *                  pluckCycle. Defaults to none.
- * @returns a random element
+ * @returns {*} a random element
  */
 Generator.prototype.pluck = function(array, limit) {
     if(array.length <= (limit || 0)) { 
@@ -166,7 +166,7 @@ Generator.prototype.pluck = function(array, limit) {
  * @param {array} array - the source array (will be modified)
  * @param {int} [limit=1] - the number of elements from the end of the array
  *                  to ignore.
- * @returns a random element
+ * @returns {*} a random element
  */
 Generator.prototype.pluckCycle = function(array, limit) {
     var item = this.pluck(array, limit);
@@ -177,7 +177,7 @@ Generator.prototype.pluckCycle = function(array, limit) {
 /**
  * Create a copy of the given array and shuffle it.
  * @param {array} array - the source array. Will not be modified.
- * @returns a shuffled copy of the array
+ * @returns {array} a shuffled copy of the array
  */
 Generator.prototype.shuffle = function(array) {
     return this.shuffleInPlace(array.slice());
@@ -186,7 +186,7 @@ Generator.prototype.shuffle = function(array) {
 /**
  * Randomly rearrange the elements of a given array.
  * @param {array} array - the array to shuffle
- * @returns the given array
+ * @returns {array} the given array
  */
 Generator.prototype.shuffleInPlace = function(array) {
     for(var i = array.length - 1; i > 0; i--) {
