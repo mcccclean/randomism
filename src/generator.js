@@ -38,76 +38,6 @@ function Generator(source) {
 }
 
 /**
- * Create a new generator with the same random source.
- * That is, any action that advances this generator's source will
- * also advance the newly-created generator's source and vice-versa.
- *
- * This is useful if you want to use some weighted generation and some
- * non-weighted from the same seed, and don't want to have to keep setting
- * and un-setting the source.
- *
- * @returns {Generator} 
- */
-Generator.prototype.clone = function() {
-    return new Generator(this.source);
-};
-
-/**
- * Change the weighting curve of this generator to a custom function.
- *
- * `curve` should take one parameter, a number in [0, 1), and return 
- * a number of the same format.
- *
- * For example, the default curve is `(n) => n`, while the front-weighted
- * curve is `(n) => n * n`.
- *
- * You can also use a curve function that returns numbers outside those 
- * bounds; that can give some interesting behaviour to the number generators
- * but the array functions (choose, pluck etc) will certainly stop working
- * correctly.
- *
- * @param {function} curve - the function to apply to numbers generated
- *                      by this new generator.
- * @returns {Generator} this
- */
-Generator.prototype.weightCustom = function(curve) {
-    this.curve = curve;
-    return this;
-};
-
-/**
- * A function to modify generated values.
- * @callback {Generator~curve}
- * @param {number} n - The number to modify, in the range [0, 1).
- * @returns {number}
- */
-function curve(n) { return 1; }
-
-/**
- * Alter the curve of this generator so that results are weighted
- * toward the low end of the [0, 1) range. (the new results will 
- * average around 1/3).
- * This is achieved by squaring the results.
- * @returns {Generator} this
- */
-Generator.prototype.weightFront = function() {
-    this.curve = function(n) { return n * n; };
-    return this;
-};
-
-/**
- * Alter the curve of this generator so that results are weighted
- * toward the high end of the [0, 1) range. (the new results will 
- * average around 2/3).
- * This is achieved by taking the square root of each result.
- * @returns {Generator} this
- */
-Generator.prototype.weightBack = function() {
-    this.curve = function(n) { return Math.sqrt(n); };
-    return this;
-};
-
-/**
  * Generate a random number in the range [0, 1).
  * @returns {number} 
  */
@@ -208,6 +138,68 @@ Generator.prototype.shuffleInPlace = function(array) {
         array[j] = temp;
     }
     return array;
+};
+
+/**
+ * Create a new generator with the same random source.
+ * That is, any action that advances this generator's source will
+ * also advance the newly-created generator's source and vice-versa.
+ *
+ * This is useful if you want to use some weighted generation and some
+ * non-weighted from the same seed, and don't want to have to keep setting
+ * and un-setting the source.
+ *
+ * @returns {Generator} 
+ */
+Generator.prototype.clone = function() {
+    return new Generator(this.source);
+};
+
+/**
+ * Change the weighting curve of this generator to a custom function.
+ *
+ * `curve` should take one parameter, a number in [0, 1), and return 
+ * a number of the same format.
+ *
+ * For example, the default curve is `(n) => n`, while the front-weighted
+ * curve is `(n) => n * n`.
+ *
+ * You can also use a curve function that returns numbers outside those 
+ * bounds; that can give some interesting behaviour to the number generators
+ * but the array functions (choose, pluck etc) will certainly stop working
+ * correctly.
+ *
+ * @param {function} curve - the function to apply to numbers generated
+ *                      by this new generator.
+ * @returns {Generator} this
+ */
+Generator.prototype.weightCustom = function(curve) {
+    this.curve = curve;
+    return this;
+};
+
+/**
+ * Alter the curve of this generator so that results are weighted
+ * toward the low end of the [0, 1) range. (the new results will 
+ * average around 1/3).
+ * This is achieved by squaring the results.
+ * @returns {Generator} this
+ */
+Generator.prototype.weightFront = function() {
+    this.curve = function(n) { return n * n; };
+    return this;
+};
+
+/**
+ * Alter the curve of this generator so that results are weighted
+ * toward the high end of the [0, 1) range. (the new results will 
+ * average around 2/3).
+ * This is achieved by taking the square root of each result.
+ * @returns {Generator} this
+ */
+Generator.prototype.weightBack = function() {
+    this.curve = function(n) { return Math.sqrt(n); };
+    return this;
 };
 
 module.exports = Generator;

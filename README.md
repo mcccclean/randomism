@@ -50,28 +50,6 @@ var lootRemaining = ['trash', 'common', 'uncommon', 'rare', 'epic'];
 var drop = lowNumbersProbably.pluck(lootRemaining);
 ```
 
-## Classes
-
-<dl>
-<dt><a href="#Generator">Generator</a></dt>
-<dd><p>A random number generator. By default, it uses an implementation of the
-Mersenne twister algorithm (from the <code>mersenne-twister</code> npm package).</p>
-<p>If a number is passed to the constructor, it&#39;ll be used to seed the generator.
-If a string is provided, it&#39;ll be hashed (using the <code>string-hash</code> package) and then used as a seed.
-If nothing is provided, a random seed will be used.</p>
-<p>If an object is provided, the generator will use the <code>random</code> property
-of that object as a random number source instead of using its own.</p>
-</dd>
-</dl>
-
-## Typedefs
-
-<dl>
-<dt><a href="#curve">curve</a> ⇒ <code>number</code></dt>
-<dd><p>A function to modify generated values.</p>
-</dd>
-</dl>
-
 <a name="Generator"></a>
 
 ## Generator
@@ -89,10 +67,6 @@ of that object as a random number source instead of using its own.
 
 * [Generator](#Generator)
     * [new Generator([seed])](#new_Generator_new)
-    * [.clone()](#Generator+clone) ⇒ <code>[Generator](#Generator)</code>
-    * [.weightCustom(curve)](#Generator+weightCustom) ⇒ <code>[Generator](#Generator)</code>
-    * [.weightFront()](#Generator+weightFront) ⇒ <code>[Generator](#Generator)</code>
-    * [.weightBack()](#Generator+weightBack) ⇒ <code>[Generator](#Generator)</code>
     * [.random()](#Generator+random) ⇒ <code>number</code>
     * [.randomInt(min, max)](#Generator+randomInt) ⇒ <code>int</code>
     * [.choose(array)](#Generator+choose) ⇒ <code>\*</code>
@@ -100,6 +74,10 @@ of that object as a random number source instead of using its own.
     * [.pluckCycle(array, [limit])](#Generator+pluckCycle) ⇒ <code>\*</code>
     * [.shuffle(array)](#Generator+shuffle) ⇒ <code>array</code>
     * [.shuffleInPlace(array)](#Generator+shuffleInPlace) ⇒ <code>array</code>
+    * [.clone()](#Generator+clone) ⇒ <code>[Generator](#Generator)</code>
+    * [.weightCustom(curve)](#Generator+weightCustom) ⇒ <code>[Generator](#Generator)</code>
+    * [.weightFront()](#Generator+weightFront) ⇒ <code>[Generator](#Generator)</code>
+    * [.weightBack()](#Generator+weightBack) ⇒ <code>[Generator](#Generator)</code>
 
 <a name="new_Generator_new"></a>
 
@@ -114,61 +92,6 @@ of that object as a random number source instead of using its own.
 // use Math.random instead of Mersenne twister
 var rng = new Generator({ random: () => Math.random() });
 ```
-<a name="Generator+clone"></a>
-
-### generator.clone() ⇒ <code>[Generator](#Generator)</code>
-Create a new generator with the same random source.
-That is, any action that advances this generator's source will
-also advance the newly-created generator's source and vice-versa.
-
-This is useful if you want to use some weighted generation and some
-non-weighted from the same seed, and don't want to have to keep setting
-and un-setting the source.
-
-**Kind**: instance method of <code>[Generator](#Generator)</code>  
-<a name="Generator+weightCustom"></a>
-
-### generator.weightCustom(curve) ⇒ <code>[Generator](#Generator)</code>
-Change the weighting curve of this generator to a custom function.
-
-`curve` should take one parameter, a number in [0, 1), and return 
-a number of the same format.
-
-For example, the default curve is `(n) => n`, while the front-weighted
-curve is `(n) => n * n`.
-
-You can also use a curve function that returns numbers outside those 
-bounds; that can give some interesting behaviour to the number generators
-but the array functions (choose, pluck etc) will certainly stop working
-correctly.
-
-**Kind**: instance method of <code>[Generator](#Generator)</code>  
-**Returns**: <code>[Generator](#Generator)</code> - this  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| curve | <code>function</code> | the function to apply to numbers generated                      by this new generator. |
-
-<a name="Generator+weightFront"></a>
-
-### generator.weightFront() ⇒ <code>[Generator](#Generator)</code>
-Alter the curve of this generator so that results are weighted
-toward the low end of the [0, 1) range. (the new results will 
-average around 1/3).
-This is achieved by squaring the results.
-
-**Kind**: instance method of <code>[Generator](#Generator)</code>  
-**Returns**: <code>[Generator](#Generator)</code> - this  
-<a name="Generator+weightBack"></a>
-
-### generator.weightBack() ⇒ <code>[Generator](#Generator)</code>
-Alter the curve of this generator so that results are weighted
-toward the high end of the [0, 1) range. (the new results will 
-average around 2/3).
-This is achieved by taking the square root of each result.
-
-**Kind**: instance method of <code>[Generator](#Generator)</code>  
-**Returns**: <code>[Generator](#Generator)</code> - this  
 <a name="Generator+random"></a>
 
 ### generator.random() ⇒ <code>number</code>
@@ -268,14 +191,58 @@ Randomly rearrange the elements of a given array.
 | --- | --- | --- |
 | array | <code>array</code> | the array to shuffle |
 
-<a name="curve"></a>
+<a name="Generator+clone"></a>
 
-## curve ⇒ <code>number</code>
-A function to modify generated values.
+### generator.clone() ⇒ <code>[Generator](#Generator)</code>
+Create a new generator with the same random source.
+That is, any action that advances this generator's source will
+also advance the newly-created generator's source and vice-versa.
 
-**Kind**: global typedef  
+This is useful if you want to use some weighted generation and some
+non-weighted from the same seed, and don't want to have to keep setting
+and un-setting the source.
+
+**Kind**: instance method of <code>[Generator](#Generator)</code>  
+<a name="Generator+weightCustom"></a>
+
+### generator.weightCustom(curve) ⇒ <code>[Generator](#Generator)</code>
+Change the weighting curve of this generator to a custom function.
+
+`curve` should take one parameter, a number in [0, 1), and return 
+a number of the same format.
+
+For example, the default curve is `(n) => n`, while the front-weighted
+curve is `(n) => n * n`.
+
+You can also use a curve function that returns numbers outside those 
+bounds; that can give some interesting behaviour to the number generators
+but the array functions (choose, pluck etc) will certainly stop working
+correctly.
+
+**Kind**: instance method of <code>[Generator](#Generator)</code>  
+**Returns**: <code>[Generator](#Generator)</code> - this  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| n | <code>number</code> | The number to modify, in the range [0, 1). |
+| curve | <code>function</code> | the function to apply to numbers generated                      by this new generator. |
 
+<a name="Generator+weightFront"></a>
+
+### generator.weightFront() ⇒ <code>[Generator](#Generator)</code>
+Alter the curve of this generator so that results are weighted
+toward the low end of the [0, 1) range. (the new results will 
+average around 1/3).
+This is achieved by squaring the results.
+
+**Kind**: instance method of <code>[Generator](#Generator)</code>  
+**Returns**: <code>[Generator](#Generator)</code> - this  
+<a name="Generator+weightBack"></a>
+
+### generator.weightBack() ⇒ <code>[Generator](#Generator)</code>
+Alter the curve of this generator so that results are weighted
+toward the high end of the [0, 1) range. (the new results will 
+average around 2/3).
+This is achieved by taking the square root of each result.
+
+**Kind**: instance method of <code>[Generator](#Generator)</code>  
+**Returns**: <code>[Generator](#Generator)</code> - this  
