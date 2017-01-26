@@ -11,7 +11,7 @@ distribution curves (so you can weight generation toward low or high numbers,
 for example), it'll shuffle arrays, and has a bunch of handy methods for
 choosing things from a collection.
 
-The focus is on ease-of-use and predictability rather than speed or
+The focus is on ease-of-use and programmer comfort rather than speed or
 cryptographic security, so if those are priorities for you, this probably
 isn't the package you're looking for. 
 
