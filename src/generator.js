@@ -16,8 +16,9 @@ function makeSource(source) {
 
 /**
  * @class
- * A random number generator. By default, it uses an implementation of the
- * Mersenne twister algorithm (from the `mersenne-twister` npm package).
+ * A random number generator. This is the main class exported by the package.
+ * By default, it uses an implementation of the Mersenne twister algorithm 
+ * (from the `mersenne-twister` npm package).
  *
  * If a number is passed to the constructor, it'll be used to seed the generator.
  * If a string is provided, it'll be hashed (using the `string-hash` package) and then used as a seed.
