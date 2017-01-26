@@ -154,10 +154,10 @@ Generator.prototype.pluck = function(array, limit) {
  * that is semi-random, but with the additional property that any individual
  * item will be guaranteed to be separated by at least `limit` other items.
  * 
- * This is especially neat if the generator has been created via
- * @link {Generator~curve} that weights generation to lower numbers. Repeated 
- * calls to this function with the same array will result in a very poor shuffle,
- * with items roughly in their original order but with some perturbation.
+ * This is especially neat if the generator has been weighted to generate
+ * lower numbers. Repeated calls to this function with the same array will 
+ * result in a very half-hearted shuffle, with items roughly in their original
+ * order but with some perturbation.
  *
  * This is great for situations like footstep sound effects, which occur very 
  * regularly and sound awful if the same sound is played consecutive and also
