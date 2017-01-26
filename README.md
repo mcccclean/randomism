@@ -15,12 +15,25 @@ The focus is on ease-of-use and programmer comfort rather than speed or
 cryptographic security, so if those are priorities for you, this probably
 isn't the package you're looking for. 
 
+## Installation
+
+Install via yarn or npm.
+
+```bash
+yarn add randomism
+npm install --save randomism
+```
+
+## Usage
+
 Really basic usage:
 
 ```javascript
 var RNG = require('randomism');
 
-var generator = new RNG('my favourite seed');
+var generator = new RNG();
+// or
+var generator = new RNG('seeded');
 
 var x = generator.random() * map_width;
 var y = generator.random() * map_height;
