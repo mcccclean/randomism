@@ -50,6 +50,28 @@ var lootRemaining = ['trash', 'common', 'uncommon', 'rare', 'epic'];
 var drop = lowNumbersProbably.pluck(lootRemaining);
 ```
 
+## Classes
+
+<dl>
+<dt><a href="#Generator">Generator</a></dt>
+<dd><p>A random number generator. By default, it uses an implementation of the
+Mersenne twister algorithm (from the <code>mersenne-twister</code> npm package).</p>
+<p>If a number is passed to the constructor, it&#39;ll be used to seed the generator.
+If a string is provided, it&#39;ll be hashed (using the <code>string-hash</code> package) and then used as a seed.
+If nothing is provided, a random seed will be used.</p>
+<p>If an object is provided, the generator will use the <code>random</code> property
+of that object as a random number source instead of using its own.</p>
+</dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#curve">curve</a> ⇒ <code>number</code></dt>
+<dd><p>A function to modify generated values.</p>
+</dd>
+</dl>
+
 <a name="Generator"></a>
 
 ## Generator
@@ -109,12 +131,23 @@ and un-setting the source.
 ### generator.weightCustom(curve) ⇒ <code>[Generator](#Generator)</code>
 Change the weighting curve of this generator to a custom function.
 
+`curve` should take one parameter, a number in [0, 1), and return 
+a number of the same format.
+
+For example, the default curve is `(n) => n`, while the front-weighted
+curve is `(n) => n * n`.
+
+You can also use a curve function that returns numbers outside those 
+bounds; that can give some interesting behaviour to the number generators
+but the array functions (choose, pluck etc) will certainly stop working
+correctly.
+
 **Kind**: instance method of <code>[Generator](#Generator)</code>  
 **Returns**: <code>[Generator](#Generator)</code> - this  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| curve | <code>Generator~curve</code> | the function to apply to numbers generated                      by this new generator. |
+| curve | <code>function</code> | the function to apply to numbers generated                      by this new generator. |
 
 <a name="Generator+weightFront"></a>
 
@@ -234,4 +267,15 @@ Randomly rearrange the elements of a given array.
 | Param | Type | Description |
 | --- | --- | --- |
 | array | <code>array</code> | the array to shuffle |
+
+<a name="curve"></a>
+
+## curve ⇒ <code>number</code>
+A function to modify generated values.
+
+**Kind**: global typedef  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| n | <code>number</code> | The number to modify, in the range [0, 1). |
 

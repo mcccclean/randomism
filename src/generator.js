@@ -55,7 +55,18 @@ Generator.prototype.clone = function() {
 /**
  * Change the weighting curve of this generator to a custom function.
  *
- * @param {Generator~curve} curve - the function to apply to numbers generated
+ * `curve` should take one parameter, a number in [0, 1), and return 
+ * a number of the same format.
+ *
+ * For example, the default curve is `(n) => n`, while the front-weighted
+ * curve is `(n) => n * n`.
+ *
+ * You can also use a curve function that returns numbers outside those 
+ * bounds; that can give some interesting behaviour to the number generators
+ * but the array functions (choose, pluck etc) will certainly stop working
+ * correctly.
+ *
+ * @param {function} curve - the function to apply to numbers generated
  *                      by this new generator.
  * @returns {Generator} this
  */
@@ -70,6 +81,7 @@ Generator.prototype.weightCustom = function(curve) {
  * @param {number} n - The number to modify, in the range [0, 1).
  * @returns {number}
  */
+function curve(n) { return 1; }
 
 /**
  * Alter the curve of this generator so that results are weighted
